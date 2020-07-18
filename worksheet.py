@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import mode
 
 df=pd.read_csv('HamoyeData1.csv')
-#print(df.head(10))
+print(df.head(10))
 
 #getting the modal class in fuel_unit
 print(df.fuel_unit)
@@ -14,12 +14,13 @@ print(modalfuelunit)
 
 #replacing missing values in fuel_unit and assigning the new variable to it
 
-#df.fuel_unit=df.fuel_unit.fillna(modalfuelunit)
-#missingfuelunit=df.fuel_unit.isnull().sum()
-#print(missingfuelunit)
+df.fuel_unit=df.fuel_unit.fillna(modalfuelunit)
+missingfuelunit=df.fuel_unit.isnull().sum()
+print(missingfuelunit)
 
 
-#checking the cprrelation between all numerical values (int and float)
+#checking the correlation between all numerical values (int and float)
+
 numfeatures=df.select_dtypes(include=['int', 'float'])
 numfeatures
 numfeaturescor=numfeatures.corr()['fuel_cost_per_unit_burned'][:]
@@ -28,13 +29,16 @@ corels=(numfeaturescor[abs(numfeaturescor) > 0.0]).sort_values(ascending=False)
 print(corels)
 
 print(df.describe()) #to see the 75th percentile and standard deviation
+
 #checking for kurtosis and skewness
+
 from scipy.stats import kurtosis, skew
 print(kurtosis(df.fuel_qty_burned))
 print(skew(df.fuel_qty_burned))
 
 #checking the info to see missing patterns
 print(df.info())
+
 # checking for features with missing values
 missing=df.isnull().sum()
 print(missing)
